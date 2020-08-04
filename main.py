@@ -27,24 +27,26 @@ class paddle(object):
   def movement(self):
     keys = pygame.key.get_pressed()
 
-    if event.type == pygame.KEYDOWN:
-      self.y -=1
-
-    if event.type == pygame.KEYUP:
+    if keys[pygame.K_DOWN]:
       self.y +=1
+
+    if keys[pygame.K_UP]:
+      self.y -=1
 
 class wallObj(object):
   def __init__(self):
     pygame.sprite.Sprite.__init__(self)
 
     wallObj.image = pygame.image.load("wall.png")
+    self.image = wallObj.image
+    self.image = pygame.transform.scale(self.image,(12,600))
 
     self.x = 50
     self.y  =50
 
   def draw(self, surface, width, height, x,y):
     surface.blit(self.image, (self.x, self.y))
-    self.image = pygame.transform.scale(self.image,600,600)
+
     self.x = x
     self.y = y
     self.hitbox = (width/2,height/2, width+5, height,+5)
@@ -54,12 +56,13 @@ class wallObj(object):
 
 
 pygame.init()
-screen_width =600
+screen_width =800
 screen_height = 600
 screen = pygame.display.set_mode((screen_width,screen_height))
 
 sprite= paddle()
 wall1= wallObj()
+wall2= wallObj()
 
 running= True
 
@@ -72,10 +75,12 @@ while running:
 
   screen.fill((255,255,255))
 
+  wall1.draw(screen,600,1,0,0)
+
+  wall2.draw(screen,800,20,800,20)
+
   sprite.movement()
 
   sprite.draw(screen)
-
-  wall1.draw(screen)
 
   pygame.display.update()
