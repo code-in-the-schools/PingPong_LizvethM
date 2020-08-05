@@ -11,18 +11,13 @@ class paddle(object):
       self.image = paddle.image
       self.image = pygame.transform.scale(self.image,(25,150))
 
-      self.x = 60
+      self.x = 700
       self.y = 60
       self.hitbox = (self.x,self.y,34, 34)
-
-
-
 
   def draw(self, surface):
     surface.blit(self.image,(self.x,self.y))
     #self.image = paddle.image
-
- 
 
   def movement(self):
     keys = pygame.key.get_pressed()
@@ -51,6 +46,28 @@ class wallObj(object):
     self.y = y
     self.hitbox = (width/2,height/2, width+5, height,+5)
 
+class ball(object):
+  def __init__(self):
+    pygame.sprite.Sprite.__init__(self)
+    ball.image = pygame.image.load("ball.png")
+    self.image = ball.image
+    self.image = pygame.trasform.scale(self.image,(12,12))
+
+    self.x = 20
+    self.y = 30
+
+  def draw(self, surface):
+    surface.blit(self.image,(self.x, self.y,))
+
+  def bounce(self,screen_wdth,screen_height, collider):
+    self.x += self.x_velocity
+    self.y += self.y_velocity
+
+    if(self.y <-0):
+      self.y_velocity = 2
+    if(self.y >= screen_height-50):
+      self.y_velocity = -2
+
 
 
 
@@ -62,7 +79,6 @@ screen = pygame.display.set_mode((screen_width,screen_height))
 
 sprite= paddle()
 wall1= wallObj()
-wall2= wallObj()
 
 running= True
 
@@ -75,9 +91,7 @@ while running:
 
   screen.fill((255,255,255))
 
-  wall1.draw(screen,600,1,0,0)
-
-  wall2.draw(screen,800,20,800,20)
+  wall1.draw(screen,600,1,790,0)
 
   sprite.movement()
 
